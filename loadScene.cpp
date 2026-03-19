@@ -27,6 +27,7 @@ std::filesystem::path parentDir;
 
 const float lightIntensityTransfer=3261.085/60;
 void loadScene(std::filesystem::path path) {
+    fnLogg("FILE NAME:{}",path.c_str());
     auto gltfFile = fastgltf::GltfDataBuffer::FromPath(path);
     if (gltfFile.error()!=fastgltf::Error::None) {
         fnLogg("error opening file");

@@ -43,7 +43,7 @@ vk::Queue computeQueue;
 extern flecs::world world;
 flecs::entity selectedEntity;
 
-void editorMainLoop() {
+void editorMainLoop(std::filesystem::path path) {
     selectedEntity = world.entity(0);
     CmdBuffer cmd = CmdBuffer(vkb::QueueType::graphics);
 
@@ -53,7 +53,7 @@ void editorMainLoop() {
     Renderer::device.createFence(&finishedRenderingFenceInfo, nullptr, &Renderer::finishedRenderingFence);
 
 
-    loadScene("../models/testScene/testScene.gltf");
+    loadScene(path);
 
     vertextShader.createVertexShader();
     fragmentShader.createFragmentShader();

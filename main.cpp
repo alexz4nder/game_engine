@@ -18,17 +18,22 @@
 #include "util/logging.h"
 
 flecs::world world;
-void editorMainLoop();
+void editorMainLoop(std::filesystem::path path);
 
-void renderThread() {
-    editorMainLoop();
+void renderThread(std::filesystem::path path) {
+    editorMainLoop(path);
 }
 std::ostream &operator<<(std::ostream &os, glm::vec3 v);
-int main() {
+int main(int argc ,char** argv) {
+    if (argc!=2) {
+        fnLogg("ERROR:NO FILE SPECIFIED\n"
+               "you need to specify path to gltf file")
+        return -1;
+    }
     Renderer::initializeRenderer();
 
 
-    std::thread rendererThread(renderThread);
+    std::thread rendererThread(renderThread,std::filesystem::path(argv[1]));
     while (1) {
         SDL_Event ev;
         if (SDL_PollEvent(&ev)) {
